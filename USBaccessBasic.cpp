@@ -21,8 +21,8 @@
 
 #define TIMEOUT 1000
 
-const int maxHID = 128 ;
-SUSBdata data[128] ;
+const int maxHID = 256 ;
+SUSBdata data[256] ;
 
 int nr = 0;
 
@@ -260,6 +260,8 @@ int cwOpenCleware(const char *path = NULL)
 	{
 		data[n].v = cur_dev->vendor_id;
 		data[n].p = cur_dev->product_id;
+		data[n].hidpath = (char *)malloc(16);
+                strncpy(data[n].hidpath, cur_dev->path, 16);
 
 		data[n].gadgettype = (enum USBtype_enum)data[n].p;
 		data[n].gadgetVersionNo = cur_dev -> release_number;
@@ -274,7 +276,8 @@ int cwOpenCleware(const char *path = NULL)
 			data[n].SerialNumber = -1 ;
 		}
 		if (data[n].SerialNumber <= 0) {		// getting the Serial number failed, so get it directly!
-			data[n].handle = hid_open(data[n].v, data[n].p, NULL);
+fprintf(stderr,"Found path %s\n", data[n].hidpath);
+			data[n].handle = hid_open_path(data[n].hidpath);
 			int SerNum = 0 ;
 			int addr = 0;
 			for (addr=8 ; addr <= 14 ; addr++) {	// unicode byte 2 == 0
@@ -307,7 +310,8 @@ int cwOpenDevice(int index)
 	if (data[index].handle)
 		return 1;
 
-	data[index].handle = hid_open(data[index].v, data[index].p, NULL);
+fprintf(stderr,"Opening path %s\n", data[index].hidpath);
+	data[index].handle = hid_open_path(data[index].hidpath);
 
 	char ok = data[index].handle != NULL;
 

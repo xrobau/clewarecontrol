@@ -59,6 +59,7 @@ typedef struct {
 	int	SerialNumber;
 	int	report_type;
 	int	HWversion ;
+	char	*hidpath;
 	} SUSBdata;
 
 extern int nr;
