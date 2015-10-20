@@ -276,7 +276,6 @@ int cwOpenCleware(const char *path = NULL)
 			data[n].SerialNumber = -1 ;
 		}
 		if (data[n].SerialNumber <= 0) {		// getting the Serial number failed, so get it directly!
-fprintf(stderr,"Found path %s\n", data[n].hidpath);
 			data[n].handle = hid_open_path(data[n].hidpath);
 			int SerNum = 0 ;
 			int addr = 0;
