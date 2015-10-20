@@ -309,7 +309,6 @@ int cwOpenDevice(int index)
 	if (data[index].handle)
 		return 1;
 
-fprintf(stderr,"Opening path %s\n", data[index].hidpath);
 	data[index].handle = hid_open_path(data[index].hidpath);
 
 	char ok = data[index].handle != NULL;
