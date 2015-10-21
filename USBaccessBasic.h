@@ -12,7 +12,7 @@
 #ifndef __USBACCESSBASIC_H__
 #define __USBACCESSBASIC_H__
 
-#include <hidapi/hidapi.h>
+#include "hidapi.h"
 
 typedef hid_device * HANDLE;
 

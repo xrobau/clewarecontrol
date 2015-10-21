@@ -31,7 +31,7 @@
 #ifndef __USBACCESS_H__
 #define __USBACCESS_H__
 
-#include <hidapi/hidapi.h>
+#include "hidapi.h"
 typedef hid_device * HANDLE;
 
 const int USBaccessVersion = 330 ;

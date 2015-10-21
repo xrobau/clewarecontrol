@@ -2,16 +2,21 @@
 VERSION=4.0
 
 DEBUG=-g -W -pedantic #-pg #-fprofile-arcs
-LDFLAGS+=`pkg-config --libs hidapi-libusb`
-CXXFLAGS+=-O3 -Wall -DVERSION=\"$(VERSION)\" $(DEBUG) `pkg-config --cflags hidapi-libusb`
+LDFLAGS+=`pkg-config --libs libudev`
+# CXXFLAGS+=-O3 -Wall -DVERSION=\"$(VERSION)\" $(DEBUG) `pkg-config --cflags hidapi-libusb`
+CXXFLAGS+=-O3 -Wall -DVERSION=\"$(VERSION)\" $(DEBUG)
 CFLAGS+=$(CXXFLAGS)
 
-OBJS=main.o USBaccessBasic.o USBaccess.o error.o
+INCLUDES ?= `pkg-config libudev --cflags`
+
+OBJS=main.o hid.o USBaccessBasic.o USBaccess.o error.o
+
+
 
 all: clewarecontrol
 
 clewarecontrol: $(OBJS)
-	$(CXX) $(OBJS) $(LDFLAGS) -o clewarecontrol
+	$(CXX) $(INCLUDES) $(OBJS) $(LDFLAGS) -o clewarecontrol
 
 cleware_python:
 	swig -c++ -python cleware.i
